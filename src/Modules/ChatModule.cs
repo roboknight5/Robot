@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Microsoft.VisualBasic;
 
 namespace Robot.Modules
 {
@@ -14,19 +15,11 @@ namespace Robot.Modules
         [Summary("Clears text from user")]
         public async Task ClearAsync(SocketUser user, int count )
         {
-            var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
+            var messages = await Context.Channel.GetMessagesAsync(count+1).FlattenAsync();
             Console.WriteLine(user.Username);
             IEnumerable<IMessage> userMessage;
             userMessage = messages.Where(x => x.Author == user);
-            int temp = 0;
-            foreach (var h in userMessage.ToArray())
-            {
-                if (temp == count)
-                    break;
-                await Context.Channel.DeleteMessageAsync(h);
-                await Task.Delay(700);
-                temp++;
-            }
+            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
         }
 
         [Command("clear")]
@@ -37,11 +30,8 @@ namespace Robot.Modules
             Console.WriteLine(user.Username);
             IEnumerable<IMessage> userMessage;
             userMessage = messages.Where(x => x.Author == user);
-            foreach (var h in userMessage.ToArray())
-            {
-                await Context.Channel.DeleteMessageAsync(h);
-                await Task.Delay(700);
-            }
+            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
+            
 
         }
         [Command("clear")]
@@ -49,27 +39,15 @@ namespace Robot.Modules
         public async Task ClearAsync()
         {
             var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
-            foreach (var h in messages.ToArray())
-            {
-                await Context.Channel.DeleteMessageAsync(h);
-                await Task.Delay(700);
-            }
+            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(messages);
+            
         }
         [Command("clear")]
         [Summary("Clears text from user")]
         public async Task ClearAsync(int count)
         {
-            var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
-            int temp = 0;
-            foreach (var h in messages.ToArray())
-            {
-                if(temp==count)
-                    break;
-                await Context.Channel.DeleteMessageAsync(h);
-                await Task.Delay(700);
-                temp++;
-            }
-
+            var messages = await Context.Channel.GetMessagesAsync(count+1).FlattenAsync();
+            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(messages);
         }
 
 
