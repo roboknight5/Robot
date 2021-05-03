@@ -22,6 +22,7 @@ namespace Robot.Modules
             {
                 ReplyAsync(echo);
                 Task.Delay(700);
+                
 
             }
             return Task.CompletedTask;
@@ -35,5 +36,6 @@ namespace Robot.Modules
             var encodedUrl = "https://letmegooglethat.com/?q=" + encodedQuestion;
             await ReplyAsync($"Here let me google it for your {encodedUrl}");
         }
+
     }
 }
