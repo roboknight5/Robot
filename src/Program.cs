@@ -28,12 +28,10 @@ namespace Robot
             
             
             _client.Log += Log;
-            string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-
 
            
 
-            var token = File.ReadAllText(Path.GetFullPath(wanted_path+"/../token.txt"));
+            var token = File.ReadAllText("token.txt");
 
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
