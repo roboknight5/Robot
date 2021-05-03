@@ -28,8 +28,10 @@ namespace Robot
             
             
             _client.Log += Log;
+            string sFile = "../../../../src/token.txt";
 
-            var token = File.ReadAllText("/home/mohamed/Documents/C# Projects/Robot/Robot/token.txt");
+
+            var token = File.ReadAllText(Path.GetFullPath(sFile));
 
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
