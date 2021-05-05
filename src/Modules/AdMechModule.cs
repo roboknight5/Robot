@@ -15,8 +15,9 @@ namespace Robot.Modules
         [Alias("Encode")]
         public async Task EncryptAsync([Remainder] string text)
         {
+        
             var result = string.Join(
-                String.Empty, // running them all together makes it tricky.
+                string.Empty, // running them all together makes it tricky.
                 Encoding.UTF8
                     .GetBytes(text)
                     .Select(byt => Convert.ToString(byt, 2).PadLeft(8, '0'))); // must ensure 8 digits.
@@ -28,6 +29,7 @@ namespace Robot.Modules
         [Alias("Decode")]
         public async Task DecryptAsync([Remainder] string text)
         {
+            text=Regex.Replace(text, @"\s+", "");
             var result=Encoding.UTF8.GetString(
                 Regex.Split(
                         text
