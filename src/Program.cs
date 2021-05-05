@@ -11,6 +11,8 @@ namespace Robot
     {
         private DiscordSocketClient _client;
         private CommandService _commandService;
+        private LoggingService _loggingService;
+
 
         static void Main(string[] args)
         {
@@ -23,11 +25,15 @@ namespace Robot
         {
             _client=new DiscordSocketClient();
             _commandService=new CommandService();
+            _loggingService=new LoggingService(_client,_commandService);
+             
             Robot.CommandHandler commandHandler=new CommandHandler(_client,_commandService);
             await commandHandler.InstallCommandsAsync();
             
             
-            _client.Log += Log;
+            
+            
+            
 
            
 

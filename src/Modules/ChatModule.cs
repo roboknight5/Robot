@@ -21,7 +21,6 @@ namespace Robot.Modules
             userMessage = messages.Where(x => x.Author == user);
             await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
         }
-
         [Command("clear")]
         [Summary("Clears text from user")]
         public async Task ClearAsync(SocketUser user)
@@ -31,8 +30,6 @@ namespace Robot.Modules
             IEnumerable<IMessage> userMessage;
             userMessage = messages.Where(x => x.Author == user);
             await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
-            
-
         }
         [Command("clear")]
         [Summary("Clears text from user")]
@@ -49,23 +46,5 @@ namespace Robot.Modules
             var messages = await Context.Channel.GetMessagesAsync(count+1).FlattenAsync();
             await ((ITextChannel) Context.Channel).DeleteMessagesAsync(messages);
         }
-
-
-        // else
-            // {
-            //     Console.WriteLine("here");
-            //     int temp = 0;
-            //     foreach (var h in messages.ToArray())
-            //     {
-            //         if (temp == count)
-            //             break;
-            //
-            //         await Context.Channel.DeleteMessageAsync(h);
-            //         await Task.Delay(700);
-            //         temp++;
-            //
-            //     }
-            // }
-        
     }
 }
