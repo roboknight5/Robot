@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 
 namespace Robot.Modules
@@ -32,7 +33,15 @@ namespace Robot.Modules
                     return;
                 seconds = input[0];
             }
-            var message = await Context.Channel.SendMessageAsync(($"Hours:{hours} Minute:{min} Seconds:{seconds}"));
+
+            var embed = new EmbedBuilder();
+     
+            embed.AddField("Timer", ($"Hours:{hours} Minute:{min} Seconds:{seconds}"))
+                .WithCurrentTimestamp()
+                .WithAuthor(Context.User);
+            var message = await Context.Channel.SendMessageAsync(embed:embed.Build());
+
+            // var message = await Context.Channel.SendMessageAsync(($"Hours:{hours} Minute:{min} Seconds:{seconds}"));
 
             while (true)
             {
@@ -52,15 +61,41 @@ namespace Robot.Modules
                 if (hours<0 ||min<0|| seconds<0)
                 {
                     hours = min = seconds = 0;
-                    await message.ModifyAsync(msg=>msg.Content= $"Hours:{hours} Minute:{min} Seconds:{seconds}");
+                    // await message.ModifyAsync(msg=>msg.Content= $"Hours:{hours} Minute:{min} Seconds:{seconds}");
+                    await message.ModifyAsync(msg=>
+                    {
+                        var embed = new EmbedBuilder();
+     
+                        embed.AddField("Timer", ($"Hours:{hours} Minute:{min} Seconds:{seconds}"))
+                            .WithCurrentTimestamp()
+                            .WithAuthor(Context.User);
+                        msg.Embed =embed.Build() ;
+                    });
                     await Task.Delay(1000);
-                    
-                    await Context.Channel.SendMessageAsync($"Time Up!! {Context.User.Mention}");
-                    await message.DeleteAsync();
+                    await message.ModifyAsync(msg=>
+                    {
+                        var embed = new EmbedBuilder();
+     
+                        embed.AddField("Time Up!", ($"{Context.User.Mention}"))
+                            .WithCurrentTimestamp()
+                            .WithAuthor(Context.User);
+                        msg.Embed =embed.Build() ;
+                    });
+                    // await Context.Channel.SendMessageAsync($"Time Up!! {Context.User.Mention}");
+                    // await message.DeleteAsync();
                     break;
                 }
 
-                await message.ModifyAsync(msg=>msg.Content= $"Hours:{hours} Minute:{min} Seconds:{seconds}");
+                // await message.ModifyAsync(msg=>msg.Content= $"Hours:{hours} Minute:{min} Seconds:{seconds}");
+                await message.ModifyAsync(msg=>
+                {
+                    var embed = new EmbedBuilder();
+     
+                    embed.AddField("Timer", ($"Hours:{hours} Minute:{min} Seconds:{seconds}"))
+                        .WithCurrentTimestamp()
+                        .WithAuthor(Context.User);
+                    msg.Embed =embed.Build() ;
+                });
                 await Task.Delay(1000);
                 seconds--;
 

@@ -26,7 +26,4 @@ namespace Robot.Modules
             await ReplyAsync($"{userInfo.Username}#{userInfo.Discriminator}");
         }
     }
-
-
-    
 }

@@ -41,6 +41,7 @@ namespace Robot
 
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
+            await _client.SetGameAsync("I Serve The Omnissiah");
             await Task.Delay(-1);
 
 
