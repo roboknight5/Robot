@@ -21,7 +21,7 @@ namespace Robot.Modules
         [Command("encode")]
         [Summary("Converts text to binary")]
         [Alias("Encode")]
-        public async Task EncryptAsync([Remainder] string text)
+        public async Task EncodeAsync([Remainder] string text)
         {
         
             var result = string.Join(
@@ -31,14 +31,13 @@ namespace Robot.Modules
                     .Select(byt => Convert.ToString(byt, 2).PadLeft(8, '0'))); // must ensure 8 digits.
             
             result = Regex.Replace(result,".{8}","$0 ");
-
-
+            
             await ReplyAsync(result);
         }
         [Command("decode")]
         [Summary("Converts binary to text")]
         [Alias("Decode")]
-        public async Task DecryptAsync([Remainder] string text)
+        public async Task DecodeAsync([Remainder] string text)
         {
             text=Regex.Replace(text, @"\s+", "");
             var result=Encoding.UTF8.GetString(
@@ -48,9 +47,6 @@ namespace Robot.Modules
                     .Where(binary => !String.IsNullOrEmpty(binary)) // keeps the matches; drops empty parts 
                     .Select(binary => Convert.ToByte(binary, 2))
                     .ToArray());
-
-
-            
             await ReplyAsync(result);
         }
 
