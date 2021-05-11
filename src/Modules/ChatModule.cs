@@ -34,10 +34,9 @@ namespace Robot.Modules
         [Summary("Clears text from user")]
         public async Task ClearAsync(SocketUser user, int count )
         {
-            var messages = await Context.Channel.GetMessagesAsync(count+1).FlattenAsync();
-            Console.WriteLine(user.Username);
+            var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
             IEnumerable<IMessage> userMessage;
-            userMessage = messages.Where(x => x.Author == user);
+            userMessage = messages.Where(x => x.Author == user).Take(count);
             await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
         }
         [Command("clear")]
