@@ -16,6 +16,8 @@ namespace Robot.Modules
         public string Attribute { get; set; }
         public int Number { get; set; } = 0;
         public int Amount { get; set; } = 0;
+        public bool Random { get; set; } =true;
+        
 
 
     }
@@ -65,6 +67,8 @@ namespace Robot.Modules
                     var quotesList = quotes.QuoteList;
                     if (arguments != null)
                     {
+              
+                        
                         if (arguments.Attribute != null)
                         {
                             quotesList = quotesList.Where(x => x.Attribute.ToLower() == arguments.Attribute.ToLower())
@@ -76,10 +80,23 @@ namespace Robot.Modules
                                 await ReplyAsync(embed: embed.Build());
                                 return;
                             }
-                            
-
                         }
                         
+                        if (arguments.Random)
+                        {
+                            Random rand=new Random();
+                            int num = rand.Next(0, quotesList.Count);
+                            quotesList = new List<Quote>() {quotesList[num]};
+                            arguments.Number = 0;
+                            arguments.Amount = 0;
+                        }
+                        else if(arguments.Number==0&&arguments.Amount==0&&arguments.Attribute==null)
+                        {
+                            return;
+                        }
+   
+                        
+
 
                         if (arguments.Amount > 0)
                         {

@@ -1,5 +1,8 @@
+using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 
@@ -31,6 +34,7 @@ namespace Robot
             // See Dependency Injection guide for more information.
             await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), 
                 services: null);
+
         }
 
         public async Task HandleCommandAsync(SocketMessage messageParam)
@@ -48,16 +52,30 @@ namespace Robot
                   message.HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
                 message.Author.IsBot)
                 return;
+            
+            
 
-            // Create a WebSocket-based command context based on the message
+            // Create a WebSocket-based command context based on the messag
+            // e
             var context = new SocketCommandContext(_client, message);
 
             // Execute the command with the command context we just
             // created, along with the service provider for precondition checks.
-            await _commands.ExecuteAsync(
+            var result=await _commands.ExecuteAsync(
                 context: context, 
                 argPos: argPos,
                 services: null);
+            
+            if (!result.IsSuccess)
+            {
+                var reason = result.Error;
+                var embed = new EmbedBuilder();
+                embed.AddField("Error Occured", reason).WithColor(Color.Red);
+                await context.Channel.SendMessageAsync(embed:embed.Build());
+                Console.WriteLine(reason);
+            }
+            
+     
             
             
         }
