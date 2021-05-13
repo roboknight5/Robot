@@ -16,7 +16,7 @@ namespace Robot.Modules
         public string Attribute { get; set; }
         public int Number { get; set; } = 0;
         public int Amount { get; set; } = 0;
-        public bool Random { get; set; } =true;
+        public bool Random { get; set; } =false;
         
 
 
@@ -59,7 +59,7 @@ namespace Robot.Modules
 
                     embed.Title = "Quest for knowledge";
                     embed.AddField("The Mysteries of the Cult Mechanicus", mysteries);
-                    embed.AddField("The Warnings of the Cult Mechanicus", warnings).WithColor(Color.Gold);
+                    embed.AddField("The Warnings of the Cult Mechanicus", warnings).WithColor(Color.DarkRed);
                     await ReplyAsync(embed: embed.Build());
                     break;
                 case "quote":
@@ -67,8 +67,6 @@ namespace Robot.Modules
                     var quotesList = quotes.QuoteList;
                     if (arguments != null)
                     {
-              
-                        
                         if (arguments.Attribute != null)
                         {
                             quotesList = quotesList.Where(x => x.Attribute.ToLower() == arguments.Attribute.ToLower())
@@ -78,6 +76,7 @@ namespace Robot.Modules
                                 embed.AddField("Error Invalid Attribute", $"No quotes with specified attribute {arguments.Attribute}")
                                     .WithColor(Color.Red);
                                 await ReplyAsync(embed: embed.Build());
+                                await Task.Delay(700);
                                 return;
                             }
                         }
@@ -130,21 +129,14 @@ namespace Robot.Modules
                                 times++;
                                 int chunkSize = quote.Text.Length/times;
                                 int stringLength = quote.Text.Length;
-                                Console.WriteLine(times);
                                 for (int i = 0; i < stringLength ; i += chunkSize)
                                 {
                                     if (i + chunkSize > stringLength) chunkSize = stringLength  - i;
                                     embed.AddField(quote.Speaker, quote.Text.Substring(i,chunkSize) + Environment.NewLine)
-                                        .WithFooter(quote.Source).WithColor(Color.Gold);
+                                        .WithFooter(quote.Source).WithColor(Color.DarkRed);
                                     await ReplyAsync(embed: embed.Build());
                                     embed = new EmbedBuilder();
-
                                 }
-                                
-                                    
-                                
-
-
                         }
 
                         // await ReplyAsync(embed: embed.Build());
