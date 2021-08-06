@@ -8,7 +8,7 @@
 *.sln.docstates
 .idea/
 # Build results
-
+.Service/
 [Dd]ebug/
 [Rr]elease/
 x64/
