@@ -15,7 +15,10 @@ namespace Robot.Modules
         [Summary("Echos a message")]
         public Task SayAsync([Remainder] [Summary("The text to echo")]
             string echo)
-            => ReplyAsync(echo);
+        {
+            Context.Message.DeleteAsync();
+            return ReplyAsync(echo);
+        }
 
         [Command("say")]
         [Summary("Echos a message")]
@@ -30,40 +33,40 @@ namespace Robot.Modules
             }
             return Task.CompletedTask;
         }
-        [Command("clear")]
-        [Summary("Clears text from user")]
-        public async Task ClearAsync(SocketUser user, int count )
-        {
-            var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
-            IEnumerable<IMessage> userMessage;
-            userMessage = messages.Where(x => x.Author == user).Take(count);
-            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
-        }
-        [Command("clear")]
-        [Summary("Clears text from user")]
-        public async Task ClearAsync(SocketUser user)
-        {
-            var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
-            Console.WriteLine(user.Username);
-            IEnumerable<IMessage> userMessage;
-            userMessage = messages.Where(x => x.Author == user);
-            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
-        }
-        [Command("clear")]
-        [Summary("Clears text from user")]
-        public async Task ClearAsync()
-        {
-            var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
-            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(messages);
-            
-        }
-        [Command("clear")]
-        [Summary("Clears text from user")]
-        public async Task ClearAsync(int count)
-        {
-            var messages = await Context.Channel.GetMessagesAsync(count+1).FlattenAsync();
-            await ((ITextChannel) Context.Channel).DeleteMessagesAsync(messages);
-        }
+        // [Command("clear")]
+        // [Summary("Clears text from user")]
+        // public async Task ClearAsync(SocketUser user, int count )
+        // {
+        //     var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
+        //     IEnumerable<IMessage> userMessage;
+        //     userMessage = messages.Where(x => x.Author == user).Take(count);
+        //     await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
+        // }
+        // [Command("clear")]
+        // [Summary("Clears text from user")]
+        // public async Task ClearAsync(SocketUser user)
+        // {
+        //     var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
+        //     Console.WriteLine(user.Username);
+        //     IEnumerable<IMessage> userMessage;
+        //     userMessage = messages.Where(x => x.Author == user);
+        //     await ((ITextChannel) Context.Channel).DeleteMessagesAsync(userMessage);
+        // }
+        // [Command("clear")]
+        // [Summary("Clears text from user")]
+        // public async Task ClearAsync()
+        // {
+        //     var messages = await Context.Channel.GetMessagesAsync().FlattenAsync();
+        //     await ((ITextChannel) Context.Channel).DeleteMessagesAsync(messages);
+        //     
+        // }
+        // [Command("clear")]
+        // [Summary("Clears text from user")]
+        // public async Task ClearAsync(int count)
+        // {
+        //     var messages = await Context.Channel.GetMessagesAsync(count+1).FlattenAsync();
+        //     await ((ITextChannel) Context.Channel).DeleteMessagesAsync(messages);
+        // }
 
         [Command("role")]
         [Alias("roles","Role","Roles")]

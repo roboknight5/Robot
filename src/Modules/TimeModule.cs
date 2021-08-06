@@ -8,9 +8,9 @@ namespace Robot.Modules
     {
         [Command("timer")]
         [Summary("run a timer")]
-        public async Task TimerAsync(params int[] input)
+        public async  void TimerAsync(params int[] input)
         {
-            
+            Task.Run(async () => {
             int hours = 0, min = 0, seconds = 0;
             if (input.Length == 3)
             {
@@ -104,7 +104,7 @@ namespace Robot.Modules
             
             
             
-
+            });
 
 
         }

@@ -2,13 +2,17 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <LangVersion>8</LangVersion>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <TargetFramework>net5.0</TargetFramework>
         <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Discord.Net" Version="2.3.1" />
+      <PackageReference Include="Discord.Net" Version="2.4.0" />
+      <PackageReference Include="FFMpegCore" Version="4.3.0" />
+      <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.24.1" />
+      <PackageReference Include="Python.Runtime.NETStandard" Version="3.7.1" />
+      <PackageReference Include="System.Drawing.Common" Version="6.0.0-preview.4.21253.7" />
     </ItemGroup>
 
 </Project>
